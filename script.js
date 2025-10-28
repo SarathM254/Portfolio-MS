@@ -50,4 +50,68 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.scroll-section').forEach((section) => {
         observer.observe(section);
     });
+
+    // Contact Form Submission
+    const form = document.getElementById('contact-form');
+    const result = document.getElementById('form-result');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        object.access_key = "43ea8b79-0bcf-4ce1-b25b-41f1ca7c2cc1";
+        const json = JSON.stringify(object);
+
+        result.innerHTML = "Please wait..."
+
+        fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                let json = await response.json();
+                if (response.status == 200) {
+                    result.style.color = '#84e484';
+                    result.innerHTML = "Form submitted successfully! I will contact you soon.";
+                } else {
+                    console.log(response);
+                    result.style.color = 'red';
+                    result.innerHTML = json.message;
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                result.style.color = 'red';
+                result.innerHTML = "Something went wrong!";
+            })
+            .then(function() {
+                form.reset();
+                setTimeout(() => {
+                    result.innerHTML = '';
+                }, 5000);
+            });
+    });
+
+    // Mobile Navigation
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('nav-active');
+        hamburger.classList.toggle('toggle');
+    });
+
+    // Close menu when a link is clicked
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navLinks.classList.contains('nav-active')) {
+                navLinks.classList.remove('nav-active');
+                hamburger.classList.remove('toggle');
+            }
+        });
+    });
 });
