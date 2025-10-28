@@ -24,6 +24,11 @@
                     <li><a href="#profiles">Profiles</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
         </nav>
     </header>
@@ -169,12 +174,13 @@
                             <a href="https://github.com/SarathM254" target="_blank"><i class="fab fa-github"></i></a>
                         </div>
                     </div>
-                    <form id="contact-form">
+                    <form id="contact-form" novalidate>
                         <input type="text" name="name" placeholder="Your Name" required>
                         <input type="email" name="email" placeholder="Your Email" required>
                         <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
                         <button type="submit" class="btn btn-primary">Send Message</button>
                     </form>
+                    <div id="form-result"></div>
                 </div>
             </div>
         </section>
